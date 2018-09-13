@@ -1,33 +1,24 @@
-#! python3
-# test.py - Launches a map in the browser using an address from the
-# command line or clipboard. (https://y2mate.com)
-# mp3 too good at goodbyes
-# mp3
-# my love / lose yourself / havana trump cover
+import os
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC 
+from selenium.webdriver.common.by import By
 
-import webbrowser, sys, requests
-import pyperclip
+# driver 를 설정합니다.
+driver = webdriver.Chrome()
 
-if len(sys.argv) > 1:
-     # Get user input arguments and combine as single string
-     keyword = '%20'.join(sys.argv[1:])
-     print(keyword)
-else:
-     # Get song info or url from clipboard
-     keyword = pyperclip.paste()
+# api 가 처음 접근하는 url 을 설정합니다.
+# 네이버 로그인 페이지로 접근합니다. 자세한 url은, 크롬 `command + option + i` 키를 누르면 개발자 모드로 변경되어서, 사용하고 싶은 부분의 HTML을 긁어올수 있습니다.
+driver.get('https://nid.naver.com/nidlogin.login')
 
-search_link = 'https://y2mate.com/search/' + keyword
+# url 접근후 3초간 기다려줍니다. 이유는 명령어에 접근하는 시간이랑, 실제로 코드가 적용되는 시간이 차이가 있어서, 컴퓨터가 더 빠르면(?) 다음 명령어가 씹히는 경우도 있습니다.
+# driver.implicitly_wait(3)
 
+# 'naver_id' 에 naverID 를, 'password' 에 비밀번호를 입력하면, 자동으로 robot이 입력을 해준다. 
 
+driver.find_element_by_name('id').send_keys('naver_id')
+driver.find_element_by_name('pw').send_keys('password')
 
-# check internet connection
-res = requests.get(serach_link)
-res.raise_for_status()
+# 로그인 버튼을 클릭 해줍니다.
 
-mp3Soup = bs4.BeautifulSoup(res.text)
-elem_downLink = mp3Soup.select('.item-thumbnail')
-
-
-
-# diplay text while downloading mp3 file
-print('Downloading...')  
+driver.find_element_by_xpath('//*[@id="frmNIDLogin"]/fieldset/input').click()
