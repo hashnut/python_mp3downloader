@@ -1,6 +1,6 @@
 ### python_mp3downloader
 
-### 파이썬 webdriver module, Firefox를 이용하여 커맨드 라인에서 간편하게 유투브 음악을 mp3 형태로 다운받습니다.
+### 파이썬 webdriver module, ChromeDriver를 이용하여 커맨드 라인에서 간편하게 유투브 음악을 mp3 형태로 다운받습니다.
 
 ---
 
