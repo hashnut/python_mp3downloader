@@ -1,24 +1,23 @@
-import os
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC 
-from selenium.webdriver.common.by import By
+import time
 
-# driver 를 설정합니다.
-driver = webdriver.Chrome()
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--window-size=1420,1080')
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--disable-gpu')
+chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36")
 
-# api 가 처음 접근하는 url 을 설정합니다.
-# 네이버 로그인 페이지로 접근합니다. 자세한 url은, 크롬 `command + option + i` 키를 누르면 개발자 모드로 변경되어서, 사용하고 싶은 부분의 HTML을 긁어올수 있습니다.
-driver.get('https://nid.naver.com/nidlogin.login')
+driver = webdriver.Chrome(chrome_options=chrome_options)
 
-# url 접근후 3초간 기다려줍니다. 이유는 명령어에 접근하는 시간이랑, 실제로 코드가 적용되는 시간이 차이가 있어서, 컴퓨터가 더 빠르면(?) 다음 명령어가 씹히는 경우도 있습니다.
-# driver.implicitly_wait(3)
+driver.get('https://savetomp3.com/ko/나였으면')
 
-# 'naver_id' 에 naverID 를, 'password' 에 비밀번호를 입력하면, 자동으로 robot이 입력을 해준다. 
+time.sleep(5)
 
-driver.find_element_by_name('id').send_keys('naver_id')
-driver.find_element_by_name('pw').send_keys('password')
+el = driver.find_element_by_class_name('download-mp3')
+print(el.text)
 
-# 로그인 버튼을 클릭 해줍니다.
+el.click()
+print('Downloading...')
 
-driver.find_element_by_xpath('//*[@id="frmNIDLogin"]/fieldset/input').click()
+time.sleep(30)

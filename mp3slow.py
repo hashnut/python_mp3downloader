@@ -25,15 +25,24 @@ def downFunc(keyword):
 
      # Find download button and push it (2 download buttons)
      
-     sleep(15)
-     downElem = driver.find_element_by_class_name('download')
-     downElem.click()
-     
-          
-     sleep(25)
-     down2Elem = driver.find_element_by_css_selector('a.url')
-     down2Elem.click()
+     # sleep(10)
 
+     downElem = WebDriverWait(driver, 12) \
+                .until(EC.presence_of_element_located((By.CSS_SELECTOR, '.download')))
+     sleep(5)
+     downElem.click()
+     #downElem = driver.find_element_by_class_name('')
+
+          
+     #sleep(20)
+
+     down2Elem = WebDriverWait(driver, 18) \
+                .until(EC.presence_of_element_located((By.CSS_SELECTOR, 'a.url')))
+     # error occurs because click needs element to be visible, while DriverWait doesn't care
+     # about visibility.
+     sleep(5)
+     down2Elem.click()
+     # down2Elem = driver.find_element_by_css_selector('')
 
      
      # Clear serchbar for next song
@@ -46,17 +55,17 @@ def downFunc(keyword):
 # mp3 downloading website
 mp3Link = 'https://mp3juices.cc'
 
-
+'''
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
 options.add_argument('window-size=1920x1080')
-options.add_argument("--disable-gpu")
-
+options.add_argument("disable-gpu")
+'''
 
 # 'chromedriver', chrome_options=options
 # put above inside .Chrome(HERE!)
 
-driver = webdriver.Chrome('chromedriver', chrome_options=options)
+driver = webdriver.Chrome()
 driver.get(mp3Link)
 
 # Make user Input and store in the list
